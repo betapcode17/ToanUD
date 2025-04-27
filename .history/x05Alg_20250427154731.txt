@@ -1,0 +1,10 @@
+Monotone chain algorithm
+Cách tiếp cận: Thuật toán chuỗi đơn điệu xây dựng vỏ lồi trong thời gian O(n * log(n)) . 
+Trước tiên, chúng ta phải sắp xếp các điểm và sau đó tính toán vỏ trên và vỏ dưới trong thời gian O(n) . 
+Các điểm sẽ được sắp xếp theo tọa độ x (theo tọa độ y trong trường hợp tọa độ x bằng nhau), 
+sau đó chúng ta sẽ tìm điểm cực trái và sau đó thử xoay theo chiều kim đồng hồ và tìm điểm tiếp theo, 
+sau đó lặp lại bước này cho đến khi chúng ta đạt đến điểm cực phải và sau đó lại xoay theo chiều kim đồng hồ và tìm vỏ dưới.
+
+Nếu tích vô hướng là dương: ba điểm O, A, B tạo ra một quay ngược chiều kim đồng hồ (counter-clockwise).
+Nếu tích vô hướng là âm: ba điểm O, A, B tạo ra một quay theo chiều kim đồng hồ (clockwise).
+Nếu tích vô hướng là 0: ba điểm này nằm trên một đường thẳng

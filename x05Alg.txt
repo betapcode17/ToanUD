@@ -1,0 +1,25 @@
+Monotone chain algorithm
+Cách tiếp cận: Thuật toán chuỗi đơn điệu xây dựng vỏ lồi trong thời gian O(n * log(n)) . 
+Trước tiên, chúng ta phải sắp xếp các điểm và sau đó tính toán vỏ trên và vỏ dưới trong thời gian O(n) . 
+Các điểm sẽ được sắp xếp theo tọa độ x (theo tọa độ y trong trường hợp tọa độ x bằng nhau), 
+sau đó chúng ta sẽ tìm điểm cực trái và sau đó thử xoay theo chiều kim đồng hồ và tìm điểm tiếp theo, 
+sau đó lặp lại bước này cho đến khi chúng ta đạt đến điểm cực phải và sau đó lại xoay theo chiều kim đồng hồ và tìm vỏ dưới.
+
+Nếu tích vô hướng là dương: ba điểm O, A, B tạo ra một quay ngược chiều kim đồng hồ (counter-clockwise).
+Nếu tích vô hướng là âm: ba điểm O, A, B tạo ra một quay theo chiều kim đồng hồ (clockwise).
+Nếu tích vô hướng là 0: ba điểm này nằm trên một đường thẳng
+
+
+Jarvis’ Algorithm
+Thuật toán:
+Bước 1) Khởi tạo p là điểm cực trái. 
+Bước 2) Thực hiện các bước sau trong khi chúng ta không quay lại điểm đầu tiên (hoặc cực trái). 
+            2.1) Điểm tiếp theo q là điểm sao cho bộ ba (p, q, r) ngược chiều kim đồng hồ đối với bất kỳ điểm r nào khác. 
+
+                    Để tìm điều này, chúng ta chỉ cần khởi tạo q là điểm tiếp theo, sau đó duyệt qua tất cả các điểm. 
+
+                    Đối với bất kỳ điểm i nào, nếu i ngược chiều kim đồng hồ hơn, tức là orientation(p, i, q) ngược chiều kim đồng hồ, thì chúng ta cập nhật q thành i. 
+
+                    Giá trị q cuối cùng của chúng ta sẽ là điểm ngược chiều kim đồng hồ nhất. 
+           2.2) next[p] = q (Lưu q là điểm tiếp theo của p trong vỏ lồi đầu ra). 
+           2.3) p = q (Đặt p là q cho lần lặp tiếp theo).

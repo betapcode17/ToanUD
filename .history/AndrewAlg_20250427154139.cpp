@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <cfloat>
 #include <cmath>
-// Độ phứt tạp của thuật toán: O(n log n) với n là số lượng điểm đầu vào
+
 using namespace std;
 struct Point
 {
@@ -17,7 +17,7 @@ int cross_prouduct(Point O, Point A, Point B)
 {
     return (A.x - O.x) * (B.y - O.y) - (A.y - O.y) * (B.x - O.x);
 }
-vector<Point> AndrewsAlgorithm(vector<Point> points)
+vector<Point> andrewsalgorithm(vector<Point> points)
 {
     int n = points.size();
     if (n < 3)
@@ -118,7 +118,7 @@ int main()
     points.push_back({3, 0});
     points.push_back({0, 0});
     points.push_back({3, 3});
-    vector<Point> ans = AndrewsAlgorithm(points);
+    vector<Point> ans = andrewsalgorithm(points);
     for (int i = 0; i < ans.size(); i++)
         cout << "(" << ans[i].x << ", " << ans[i].y << ")"
              << endl;

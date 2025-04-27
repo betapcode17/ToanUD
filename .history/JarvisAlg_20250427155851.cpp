@@ -15,7 +15,7 @@ int orientation(Point p, Point q, Point r)
     return (val > 0) ? 1 : 2;
 }
 
-void JarvisAlgorithm(Point points[], int n)
+void Jarvisalgorithm(Point points[], int n)
 {
     if (n < 3)
         return;
@@ -46,6 +46,6 @@ int main()
 {
     Point points[] = {{0, 3}, {2, 2}, {1, 1}, {2, 1}, {3, 0}, {0, 0}, {3, 3}};
     int n = sizeof(points) / sizeof(points[0]);
-    JarvisAlgorithm(points, n);
+    Jarvisalgorithm(points, n);
     return 0;
 }

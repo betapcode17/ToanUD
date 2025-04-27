@@ -1,5 +1,0 @@
-Cho n đỉnh trong không gian
-1) xác định bao lồi sử dụng 5 thuật toán
-2) tìm khoảng cách ngắn nhất của các cạnh nằm trên bao lồi
-3) liệt kê các điểm nằm bên trong bao lồi
-4) tìm khoảng các ngắn nhất thuộc bao lồi

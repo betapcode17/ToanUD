@@ -1,3 +1,5 @@
+
+
 // Tổng thể, thuật toán Chan có độ phức tạp là O(n log n) trong trường hợp xấu nhất, nhưng có thể đạt được O(n) trong trường hợp tốt nhất. Điều này làm cho nó trở thành một thuật toán hiệu quả cho bài toán tìm đường bao lồi trong không gian hai chiều.
 #include <iostream>
 #include <stdlib.h>
@@ -40,8 +42,8 @@ int orientation(point p, point q, point r)
 {
     int val = (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y);
     if (val == 0)
-        return 0;
-    return (val > 0) ? -1 : 1;
+        return 0;              // Collinear
+    return (val > 0) ? -1 : 1; // CW: -1 or CCW: 1
 }
 int compare(const void *vp1, const void *vp2)
 {

@@ -1,4 +1,3 @@
-// Tổng thể, thuật toán Chan có độ phức tạp là O(n log n) trong trường hợp xấu nhất, nhưng có thể đạt được O(n) trong trường hợp tốt nhất. Điều này làm cho nó trở thành một thuật toán hiệu quả cho bài toán tìm đường bao lồi trong không gian hai chiều.
 #include <iostream>
 #include <stdlib.h>
 #include <vector>
@@ -40,8 +39,8 @@ int orientation(point p, point q, point r)
 {
     int val = (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y);
     if (val == 0)
-        return 0;
-    return (val > 0) ? -1 : 1;
+        return 0;              // Collinear
+    return (val > 0) ? -1 : 1; // CW: -1 or CCW: 1
 }
 int compare(const void *vp1, const void *vp2)
 {
@@ -139,6 +138,10 @@ vector<point> GrahamScan(vector<point> &points)
         lower_hull.push_back(upper_hull[i]);
     return lower_hull;
 }
+
+/*
+    Implementation of Chan's Algorithm to compute Convex Hull in O(nlogh) complexity
+*/
 vector<point> chansalgorithm(vector<point> v)
 {
     for (int t = 0; t < v.size(); ++t)
@@ -198,6 +201,8 @@ int main()
     }
     vector<point> v(points, points + T);
     vector<point> output = chansalgorithm(v);
+    cout << "\n---------After Using Chan's Algorithm---------------\n";
+    cout << "\n***************** CONVEX HULL **********************\n";
     for (int i = 0; i < output.size(); ++i)
         cout << output[i] << " ";
     cout << "\n";

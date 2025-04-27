@@ -1,4 +1,3 @@
-// Tổng thể, thuật toán Chan có độ phức tạp là O(n log n) trong trường hợp xấu nhất, nhưng có thể đạt được O(n) trong trường hợp tốt nhất. Điều này làm cho nó trở thành một thuật toán hiệu quả cho bài toán tìm đường bao lồi trong không gian hai chiều.
 #include <iostream>
 #include <stdlib.h>
 #include <vector>
@@ -40,8 +39,8 @@ int orientation(point p, point q, point r)
 {
     int val = (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y);
     if (val == 0)
-        return 0;
-    return (val > 0) ? -1 : 1;
+        return 0;              // Collinear
+    return (val > 0) ? -1 : 1; // CW: -1 or CCW: 1
 }
 int compare(const void *vp1, const void *vp2)
 {
@@ -52,6 +51,13 @@ int compare(const void *vp1, const void *vp2)
         return (dist(p0, *p2) >= dist(p0, *p1)) ? -1 : 1;
     return (orient == 1) ? -1 : 1;
 }
+
+/*
+    Returns the index of the point to which the tangent is drawn from point p.
+    Uses a modified Binary Search Algorithm to yield tangent in O(log n) complexity
+    @param v: vector of objects of class points representing the hull aka the vector of hull points
+    @param p: Object of class point from where tangent needs to be drawn
+*/
 int tangent(vector<point> v, point p)
 {
     int l = 0;
@@ -75,6 +81,11 @@ int tangent(vector<point> v, point p)
     }
     return l;
 }
+
+/*
+    Returns the pair of integers representing the Hull # and the point in that Hull which is the extreme amongst all given Hull Points
+    @param hulls: Vector containing the hull points for various hulls stored as individual vectors.
+*/
 pair<int, int> extreme_hullpt_pair(vector<vector<point>> &hulls)
 {
     int h = 0, p = 0;
@@ -97,6 +108,12 @@ pair<int, int> extreme_hullpt_pair(vector<vector<point>> &hulls)
     }
     return make_pair(h, p);
 }
+
+/*
+    Returns the pair of integers representing the Hull # and the point in that Hull to which the point lpoint will be joined
+    @param hulls: Vector containing the hull points for various hulls stored as individual vectors.
+    @param lpoint: Pair of the Hull # and the leftmost extreme point contained in that hull, amongst all the obtained hulls
+*/
 pair<int, int> next_hullpt_pair(vector<vector<point>> &hulls, pair<int, int> lpoint)
 {
     point p = hulls[lpoint.first][lpoint.second];
@@ -115,6 +132,13 @@ pair<int, int> next_hullpt_pair(vector<vector<point>> &hulls, pair<int, int> lpo
     }
     return next;
 }
+
+/*
+    Constraint to find the outermost boundary of the points by checking if the points lie to the left otherwise adding the given point p
+    Returns the Hull Points
+    @param v: Vector of all the points
+    @param p: New point p which will be checked to be in the Hull Points or not
+*/
 vector<point> keep_left(vector<point> &v, point p)
 {
     while (v.size() > 1 && orientation(v[v.size() - 2], v[v.size() - 1], p) != LEFT_TURN)
@@ -123,6 +147,12 @@ vector<point> keep_left(vector<point> &v, point p)
         v.push_back(p);
     return v;
 }
+
+/*
+    Graham Scan algorithm to find convex hull from the given set of points
+    @param points: List of the given points in the cluster (as obtained by Chan's Algorithm grouping)
+    Returns the Hull Points in a vector
+*/
 vector<point> GrahamScan(vector<point> &points)
 {
     if (points.size() <= 1)
@@ -139,6 +169,10 @@ vector<point> GrahamScan(vector<point> &points)
         lower_hull.push_back(upper_hull[i]);
     return lower_hull;
 }
+
+/*
+    Implementation of Chan's Algorithm to compute Convex Hull in O(nlogh) complexity
+*/
 vector<point> chansalgorithm(vector<point> v)
 {
     for (int t = 0; t < v.size(); ++t)
@@ -198,6 +232,8 @@ int main()
     }
     vector<point> v(points, points + T);
     vector<point> output = chansalgorithm(v);
+    cout << "\n---------After Using Chan's Algorithm---------------\n";
+    cout << "\n***************** CONVEX HULL **********************\n";
     for (int i = 0; i < output.size(); ++i)
         cout << output[i] << " ";
     cout << "\n";

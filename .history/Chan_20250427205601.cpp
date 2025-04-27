@@ -5,12 +5,14 @@
 #define LEFT_TURN 1
 #define COLLINEAR 0
 
-struct point
+typedef struct
 {
     int x;
     int y;
-};
+} point;
+
 point p0;
+
 int dist(point p1, point p2)
 {
     return (p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y);
@@ -102,11 +104,11 @@ void GrahamScan(point *points, int n, point *hull, int *hullsize)
     (*hullsize)--;
 }
 
-struct Hull
+typedef struct
 {
     point *pts;
     int size;
-};
+} Hull;
 
 void chansalgorithm(point *v, int n, point *output, int *outsize)
 {
@@ -139,90 +141,3 @@ void chansalgorithm(point *v, int n, point *output, int *outsize)
                 }
                 printf("\n");
             }
-
-            int h = 0, p = 0;
-            for (int i = 0; i < num_hulls; i++)
-            {
-                for (int j = 0; j < hulls[i].size; j++)
-                {
-                    if (hulls[i].pts[j].y < hulls[h].pts[p].y)
-                    {
-                        h = i;
-                        p = j;
-                    }
-                }
-            }
-            int hull_seq[1000][2];
-            int hull_len = 0;
-            hull_seq[hull_len][0] = h;
-            hull_seq[hull_len++][1] = p;
-
-            for (int i = 0; i < m; i++)
-            {
-                point curr = hulls[hull_seq[hull_len - 1][0]].pts[hull_seq[hull_len - 1][1]];
-                int next_h = hull_seq[0][0];
-                int next_p = (hull_seq[0][1] + 1) % hulls[next_h].size;
-                point next = hulls[next_h].pts[next_p];
-
-                for (int j = 0; j < num_hulls; j++)
-                {
-                    int idx = tangent(hulls[j].pts, hulls[j].size, curr);
-                    point candidate = hulls[j].pts[idx];
-                    int orient = orientation(curr, next, candidate);
-                    if (orient == RIGHT_TURN || (orient == COLLINEAR && dist(curr, candidate) > dist(curr, next)))
-                    {
-                        next_h = j;
-                        next_p = idx;
-                        next = candidate;
-                    }
-                }
-
-                if (next_h == hull_seq[0][0] && next_p == hull_seq[0][1])
-                {
-                    for (int k = 0; k < hull_len; k++)
-                    {
-                        output[k] = hulls[hull_seq[k][0]].pts[hull_seq[k][1]];
-                    }
-                    *outsize = hull_len;
-                    for (int i = 0; i < num_hulls; i++)
-                        free(hull_pts[i]);
-                    free(hull_pts);
-                    free(hulls);
-                    return;
-                }
-
-                hull_seq[hull_len][0] = next_h;
-                hull_seq[hull_len++][1] = next_p;
-            }
-
-            for (int i = 0; i < num_hulls; i++)
-                free(hull_pts[i]);
-            free(hull_pts);
-            free(hulls);
-        }
-    }
-}
-
-int main()
-{
-    int T;
-    scanf("%d", &T);
-    if (T <= 0)
-        return -1;
-    point *points = (point *)malloc(sizeof(point) * T);
-    for (int i = 0; i < T; i++)
-    {
-        scanf("%d%d", &points[i].x, &points[i].y);
-    }
-    point *output = (point *)malloc(sizeof(point) * T);
-    int outsize = 0;
-    chansalgorithm(points, T, output, &outsize);
-    for (int i = 0; i < outsize; i++)
-    {
-        printf("(%d,%d) ", output[i].x, output[i].y);
-    }
-    printf("\n");
-    free(points);
-    free(output);
-    return 0;
-}

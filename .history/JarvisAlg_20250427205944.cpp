@@ -5,6 +5,8 @@ struct Point
 {
     int x, y;
 };
+
+typedef struct Point Point;
 int orientation(Point p, Point q, Point r)
 {
     int val = (q.y - p.y) * (r.x - q.x) -
@@ -14,6 +16,7 @@ int orientation(Point p, Point q, Point r)
         return 0;             // colinear
     return (val > 0) ? 1 : 2; // 1: clockwise, 2: counterclockwise
 }
+
 void JarvisAlgorithm(Point points[], int n)
 {
     if (n < 3)

@@ -3,11 +3,14 @@
 
 #define MAXN 1000
 
-struct Point
+typedef struct
 {
     int x, y;
-};
+} Point;
+
 Point mid;
+
+// Hàm tìm quadrant
 int quad(Point p)
 {
     if (p.x >= 0 && p.y >= 0)
@@ -18,6 +21,8 @@ int quad(Point p)
         return 3;
     return 4;
 }
+
+// Hàm kiểm tra hướng
 int orientation(Point a, Point b, Point c)
 {
     int res = (b.y - a.y) * (c.x - b.x) - (c.y - b.y) * (b.x - a.x);
@@ -25,6 +30,8 @@ int orientation(Point a, Point b, Point c)
         return 0;
     return (res > 0) ? 1 : -1;
 }
+
+// Hàm so sánh 2 điểm
 int compare(const void *a, const void *b)
 {
     Point p1 = *(Point *)a;
@@ -37,6 +44,8 @@ int compare(const void *a, const void *b)
         return one - two;
     return (p.y * q.x - q.y * p.x);
 }
+
+// Tìm hull với tối đa 5 điểm
 void bruteHull(Point *a, int n, Point *ret, int *ret_size)
 {
     int i, j, k;
@@ -93,6 +102,8 @@ void bruteHull(Point *a, int n, Point *ret, int *ret_size)
 
     qsort(ret, *ret_size, sizeof(Point), compare);
 }
+
+// Gộp hai hull
 void merger(Point *a, int n1, Point *b, int n2, Point *ret, int *ret_size)
 {
     int ia = 0, ib = 0, i;
@@ -150,6 +161,8 @@ void merger(Point *a, int n1, Point *b, int n2, Point *ret, int *ret_size)
         ret[(*ret_size)++] = b[ind];
     }
 }
+
+// Chia và tìm hull
 void divide(Point *a, int n, Point *ans, int *ans_size)
 {
     if (n <= 5)
@@ -174,6 +187,8 @@ void divide(Point *a, int n, Point *ans, int *ans_size)
 
     merger(left_hull, left_size, right_hull, right_size, ans, ans_size);
 }
+
+// Hàm chính
 int cmp_x(const void *a, const void *b)
 {
     Point p1 = *(Point *)a;

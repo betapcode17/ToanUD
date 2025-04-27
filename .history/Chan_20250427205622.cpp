@@ -5,12 +5,14 @@
 #define LEFT_TURN 1
 #define COLLINEAR 0
 
-struct point
+typedef struct
 {
     int x;
     int y;
-};
+} point;
+
 point p0;
+
 int dist(point p1, point p2)
 {
     return (p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y);
@@ -102,11 +104,11 @@ void GrahamScan(point *points, int n, point *hull, int *hullsize)
     (*hullsize)--;
 }
 
-struct Hull
+typedef struct
 {
     point *pts;
     int size;
-};
+} Hull;
 
 void chansalgorithm(point *v, int n, point *output, int *outsize)
 {

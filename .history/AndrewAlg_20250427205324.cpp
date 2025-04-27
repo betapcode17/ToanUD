@@ -2,10 +2,13 @@
 #include <stdlib.h>
 #include <math.h>
 #include <float.h>
-struct Point
+
+typedef struct
 {
     int x, y;
-};
+} Point;
+
+// So sánh 2 điểm theo x rồi y
 int compare_points(const void *a, const void *b)
 {
     Point *p1 = (Point *)a;
@@ -15,10 +18,14 @@ int compare_points(const void *a, const void *b)
     else
         return p1->y - p2->y;
 }
+
+// Tính cross product (tích có hướng)
 int cross_product(Point O, Point A, Point B)
 {
     return (A.x - O.x) * (B.y - O.y) - (A.y - O.y) * (B.x - O.x);
 }
+
+// Thuật toán Andrew tìm convex hull
 int AndrewsAlgorithm(Point points[], int n, Point hull[])
 {
     if (n < 3)
@@ -41,9 +48,11 @@ int AndrewsAlgorithm(Point points[], int n, Point hull[])
         hull[k++] = points[i];
     }
 
-    k--;
+    k--; // loại bỏ điểm trùng đầu-cuối
     return k;
 }
+
+// Tính diện tích bao lồi
 double area(Point points[], int n)
 {
     double result = 0.0;
@@ -54,6 +63,8 @@ double area(Point points[], int n)
     }
     return fabs(result) / 2.0;
 }
+
+// Khoảng cách ngắn nhất giữa các điểm trên bao lồi
 double min_distance(Point points[], int n)
 {
     double min_dist = DBL_MAX;
@@ -69,15 +80,19 @@ double min_distance(Point points[], int n)
     }
     return min_dist;
 }
+
+// Kiểm tra điểm p có nằm trong bao lồi hay không
 int is_inside_hull(Point p, Point hull[], int hull_size)
 {
     for (int i = 0; i < hull_size; i++)
     {
         if (cross_product(hull[i], hull[(i + 1) % hull_size], p) < 0)
-            return 0;
+            return 0; // outside
     }
-    return 1;
+    return 1; // inside or on edge
 }
+
+// Lấy danh sách các điểm nằm trong hoặc trên bao lồi
 int points_inside_hull(Point points[], int n, Point hull[], int hull_size, Point inside_points[])
 {
     int count = 0;
@@ -90,10 +105,12 @@ int points_inside_hull(Point points[], int n, Point hull[], int hull_size, Point
     }
     return count;
 }
+
+// Khoảng cách ngắn nhất từ các điểm nằm trong bao lồi đến bao lồi
 double min_distance_inside_hull(Point points[], int n, Point hull[], int hull_size)
 {
     double min_dist = DBL_MAX;
-    Point inside_points[1000];
+    Point inside_points[1000]; // tối đa 1000 điểm
     int inside_count = points_inside_hull(points, n, hull, hull_size, inside_points);
 
     for (int i = 0; i < inside_count; i++)

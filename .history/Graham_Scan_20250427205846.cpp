@@ -6,13 +6,15 @@ struct Point
 {
     int x, y;
 };
+typedef struct Point Point;
 Point p0;
-struct Stack
+typedef struct
 {
     Point *data;
     int top;
     int capacity;
-};
+} Stack;
+
 Stack *createStack(int capacity)
 {
     Stack *stack = (Stack *)malloc(sizeof(Stack));

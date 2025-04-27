@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <float.h>
+
 struct Point
 {
     int x, y;
@@ -93,7 +94,7 @@ int points_inside_hull(Point points[], int n, Point hull[], int hull_size, Point
 double min_distance_inside_hull(Point points[], int n, Point hull[], int hull_size)
 {
     double min_dist = DBL_MAX;
-    Point inside_points[1000];
+    Point inside_points[1000]; // tối đa 1000 điểm
     int inside_count = points_inside_hull(points, n, hull, hull_size, inside_points);
 
     for (int i = 0; i < inside_count; i++)

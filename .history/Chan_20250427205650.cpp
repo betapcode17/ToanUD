@@ -102,11 +102,11 @@ void GrahamScan(point *points, int n, point *hull, int *hullsize)
     (*hullsize)--;
 }
 
-struct Hull
+typedef struct
 {
     point *pts;
     int size;
-};
+} Hull;
 
 void chansalgorithm(point *v, int n, point *output, int *outsize)
 {

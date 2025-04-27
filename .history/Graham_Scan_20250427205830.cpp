@@ -6,13 +6,18 @@ struct Point
 {
     int x, y;
 };
+
+typedef struct Point Point;
+
 Point p0;
-struct Stack
+
+typedef struct
 {
     Point *data;
     int top;
     int capacity;
-};
+} Stack;
+
 Stack *createStack(int capacity)
 {
     Stack *stack = (Stack *)malloc(sizeof(Stack));
@@ -131,6 +136,7 @@ void GrahamScanAlgorithm(Point points[], int n)
     free(stack->data);
     free(stack);
 }
+
 int main()
 {
     Point points[] = {{0, 3}, {1, 1}, {2, 2}, {4, 4}, {0, 0}, {1, 2}, {3, 1}, {3, 3}};
